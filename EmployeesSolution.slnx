@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EmployeesApp.Tests/EmployeesApp.Tests.csproj" Id="6642fe7d-8fe4-4fa8-8d57-6b0ac84acde1" />
+  <Project Path="EmployeesApp/EmployeesApp.csproj" Id="a2fcf873-ab79-4ca2-aca1-d36813112efd" />
+</Solution>
