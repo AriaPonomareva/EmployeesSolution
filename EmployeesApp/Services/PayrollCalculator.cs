@@ -95,7 +95,7 @@ namespace EmployeesApp.Services
 
             // НАМЕРЕННЫЙ ДЕФЕКТ ДЛЯ PR-1:
             // Здесь должно быть years >= 1, но пока стоит years > 1.
-            if (years > 1 && years <= 5)
+            if (years >= 1 && years <= 5)
                 return 21;
 
             if (years > 5)
