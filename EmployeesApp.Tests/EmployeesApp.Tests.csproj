@@ -169,7 +169,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="PayrollCalculator.GetVacationDays" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EmployeesApp\EmployeesApp.csproj">
