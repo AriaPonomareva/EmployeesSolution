@@ -153,32 +153,32 @@ namespace EmployeesApp.Tests
         }
 
 
-        [DataTestMethod] 
-        [DataRow(0, 14)]
-        [DataRow(1, 21)]
-        [DataRow(5, 21)]
-        [DataRow(6, 28)]
-        public void GetVacationDays_VariousYears_ReturnsExpectedDays(
-    int years, int expected)
+        [DataTestMethod]
+        [DataRow(0, true)]
+        [DataRow(2, true)]
+        [DataRow(3, false)]
+        [DataRow(4, false)]
+        public void IsProbationPeriod_VariousMonths_ReturnsExpectedResult(
+      int months, bool expected)
         {
             // Arrange — входные данные подготовлены в DataRow.
 
             // Act
-            int result = PayrollCalculator.GetVacationDays(years);
+            bool result = PayrollCalculator.IsProbationPeriod(months);
 
             // Assert
             Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        public void GetVacationDays_NegativeYears_ThrowsArgumentOutOfRangeException()
+        public void IsProbationPeriod_NegativeMonths_ThrowsArgumentOutOfRangeException()
         {
             // Arrange
-            int years = -1;
+            int months = -1;
 
             // Act + Assert
             Assert.ThrowsException<ArgumentOutOfRangeException>(
-                () => PayrollCalculator.GetVacationDays(years));
+                () => PayrollCalculator.IsProbationPeriod(months));
         }
     }
 }
