@@ -11,245 +11,144 @@ namespace EmployeesApp.Tests
     [TestClass]
     public class PayrollCalculatorTests
     {
-        // Проверка налога с зарплаты 50000
+        
         [TestMethod]
-        public void CalculateTax_Salary50000_Returns6500()
+        public void CalculateTax_Salary50000_Returns6500() // Проверка налога с зарплаты 50000
         {
-                // Arrange
-                decimal salary = 50000m;
+                
+                decimal salary = 50000m; //входные данные
 
-                // Act
+              
                 decimal result =
-                    PayrollCalculator.CalculateTax(salary);
+                    PayrollCalculator.CalculateTax(salary); //вызов метода и сохранение результата
 
-                // Assert
+                
                 Assert.AreEqual(6500m, result);
             }
 
-            // 2. Налог с нулевой зарплаты
+           
             [TestMethod]
-            public void CalculateTax_Zero_ReturnsZero()
-            {
-                // Arrange
-                decimal salary = 0m;
+            public void CalculateTax_Zero_ReturnsZero()  // Налог с нулевой зарплаты
+        {
+               
+                decimal salary = 0m; //проверка границ
 
-                // Act
+                
                 decimal result =
-                    PayrollCalculator.CalculateTax(salary);
+                    PayrollCalculator.CalculateTax(salary); 
 
-                // Assert
+                
                 Assert.AreEqual(0m, result);
             }
 
-            // 3. Отрицательная зарплата
+            
             [TestMethod]
-            public void CalculateTax_NegativeSalary_ThrowsException()
-            {
-                // Arrange
+            public void CalculateTax_NegativeSalary_ThrowsException() // Отрицательная зарплата, негативный тест
+        {
+                
                 decimal salary = -1000m;
 
-                // Act и Assert
+                
                 Assert.ThrowsException<ArgumentException>(
-                    () => PayrollCalculator.CalculateTax(salary));
+                    () => PayrollCalculator.CalculateTax(salary)); // Вызов исключения определенного типа + проверка
             }
 
-            // 4. Расчёт зарплаты после вычета налога
+            
             [TestMethod]
-            public void CalculateNetSalary_50000_Returns43500()
-            {
-                // Arrange
-                decimal salary = 50000m;
+            public void CalculateNetSalary_50000_Returns43500() // Расчёт зарплаты после вычета налога
+        {
+                
+                decimal salary = 50000m; 
 
-                // Act
+                
                 decimal result =
                     PayrollCalculator.CalculateNetSalary(salary);
 
-                // Assert
+               
                 Assert.AreEqual(43500m, result);
             }
 
-            // 5. Стаж ровно один год
+            
             [TestMethod]
-            public void GetExperienceYears_ExactlyOneYear_ReturnsOne()
-            {
-                // Arrange
+            public void GetExperienceYears_ExactlyOneYear_ReturnsOne() // Стаж ровно один год
+        {
+                
                 DateTime today = new DateTime(2026, 10, 20);
                 DateTime hireDate = new DateTime(2025, 10, 20);
 
-                // Act
+               
                 int result =
-                    PayrollCalculator.GetExperienceYears(hireDate, today);
+                    PayrollCalculator.GetExperienceYears(hireDate, today); // Вычисление стажа
 
-                // Assert
+              
                 Assert.AreEqual(1, result);
             }
 
-            // 6. До полного года не хватает одного дня
+            
             [TestMethod]
-            public void GetExperienceYears_OneDayBeforeYear_ReturnsZero()
+            public void GetExperienceYears_OneDayBeforeYear_ReturnsZero() //Граничный тест
             {
-                // Arrange
+                
                 DateTime today = new DateTime(2026, 10, 20);
                 DateTime hireDate = new DateTime(2025, 10, 21);
 
-                // Act
+                
                 int result =
                     PayrollCalculator.GetExperienceYears(hireDate, today);
 
-                // Assert
+                
                 Assert.AreEqual(0, result);
             }
 
-            // 7. Дата приёма в будущем
+            
             [TestMethod]
-            public void GetExperienceYears_FutureHireDate_ThrowsException()
-            {
-                // Arrange
+            public void GetExperienceYears_FutureHireDate_ThrowsException() // Дата приёма в будущем
+        {
+                
                 DateTime today = new DateTime(2026, 10, 20);
                 DateTime hireDate = new DateTime(2027, 1, 1);
 
-                // Act и Assert
+                
                 Assert.ThrowsException<ArgumentException>(
                     () => PayrollCalculator.GetExperienceYears(
                         hireDate, today));
             }
 
-            // 8–11. Проверка премии при разном стаже
+            
             [DataTestMethod]
             [DataRow(0, 50000.0, 0.0)]
             [DataRow(1, 50000.0, 2500.0)]
             [DataRow(5, 50000.0, 2500.0)]
             [DataRow(6, 50000.0, 5000.0)]
-            public void CalculateBonus_DifferentExperience_ReturnsExpectedBonus(
+            public void CalculateBonus_DifferentExperience_ReturnsExpectedBonus(  //  Проверка премии при разном стаже
                 int years,
                 double salaryValue,
-                double expectedValue)
+                double expectedValue) //параметры метода значений
             {
-                // Arrange
+                
                 decimal salary = (decimal)salaryValue;
-                decimal expected = (decimal)expectedValue;
+                decimal expected = (decimal)expectedValue; //работа с денежным типом
 
-                // Act
+                
                 decimal result =
                     PayrollCalculator.CalculateBonus(salary, years);
 
-                // Assert
+                
                 Assert.AreEqual(expected, result);
             }
 
-        // 12. Проверка округления налога до двух знаков
+        
         [TestMethod]
-        public void CalculateTax_Rounding_ReturnsTwoDecimalPlaces()
+        public void CalculateTax_Rounding_ReturnsTwoDecimalPlaces() // Проверка округления налога до двух знаков
         {
-            // Arrange
+            
             decimal salary = 0.50m;
 
-            // Act
+            
             decimal result = PayrollCalculator.CalculateTax(salary);
 
-            // Assert
+
             Assert.AreEqual(0.07m, result);
         }
     }
 }
-//            // Arrange
-//            decimal salary = 50000m;
-
-//            // Act
-//            decimal result =
-//                PayrollCalculator.CalculateTax(salary);
-
-//            // Assert
-//            Assert.AreEqual(6500m, result);
-//        }
-
-//        // Проверка налога с нулевой зарплаты
-//        [TestMethod]
-//        public void CalculateTax_ZeroSalary_ReturnsZero()
-//        {
-//            decimal result =
-//                PayrollCalculator.CalculateTax(0m);
-
-//            Assert.AreEqual(0m, result);
-//        }
-
-//        // Проверка отрицательной зарплаты
-//        [TestMethod]
-//        public void CalculateTax_NegativeSalary_ThrowsArgumentException()
-//        {
-//            Assert.ThrowsException<ArgumentException>(
-//                () => PayrollCalculator.CalculateTax(-1m));
-//        }
-
-//        // Проверка зарплаты после вычета налога
-//        [TestMethod]
-//        public void CalculateNetSalary_Salary50000_Returns43500()
-//        {
-//            decimal result =
-//                PayrollCalculator.CalculateNetSalary(50000m);
-
-//            Assert.AreEqual(43500m, result);
-//        }
-
-//        // Стаж ровно один год
-//        [TestMethod]
-//        public void GetExperienceYears_ExactlyOneYear_ReturnsOne()
-//        {
-//            DateTime today = new DateTime(2026, 10, 31);
-//            DateTime hireDate = new DateTime(2025, 10, 31);
-
-//            int result =
-//                PayrollCalculator.GetExperienceYears(
-//                    hireDate, today);
-
-//            Assert.AreEqual(1, result);
-//        }
-
-//        // До полного года не хватает одного дня
-//        [TestMethod]
-//        public void GetExperienceYears_OneDayBeforeYear_ReturnsZero()
-//        {
-//            DateTime today = new DateTime(2026, 10, 31);
-//            DateTime hireDate = new DateTime(2025, 11, 1);
-
-//            int result =
-//                PayrollCalculator.GetExperienceYears(
-//                    hireDate, today);
-
-//            Assert.AreEqual(0, result);
-//        }
-
-//        // Проверка даты приёма в будущем
-//        [TestMethod]
-//        public void GetExperienceYears_FutureHireDate_ThrowsArgumentException()
-//        {
-//            DateTime today = new DateTime(2026, 10, 31);
-//            DateTime hireDate = new DateTime(2026, 11, 1);
-
-//            Assert.ThrowsException<ArgumentException>(
-//                () => PayrollCalculator.GetExperienceYears(
-//                    hireDate, today));
-//        }
-
-//        // Проверка премии при разном стаже
-//        [DataTestMethod]
-//        [DataRow(0, 50000.0, 0.0)]
-//        [DataRow(1, 50000.0, 2500.0)]
-//        [DataRow(5, 50000.0, 2500.0)]
-//        [DataRow(6, 50000.0, 5000.0)]
-//        public void CalculateBonus_VariousExperience_ReturnsExpectedBonus(
-//            int years,
-//            double salaryValue,
-//            double expectedValue)
-//        {
-//            decimal salary = (decimal)salaryValue;
-//            decimal expected = (decimal)expectedValue;
-
-//            decimal result =
-//                PayrollCalculator.CalculateBonus(
-//                    salary, years);
-
-//            Assert.AreEqual(expected, result);
-//        }
-//    }
-//}
