@@ -150,5 +150,34 @@ namespace EmployeesApp.Tests
             // Assert
             Assert.AreEqual(0.07m, result);
         }
+
+
+        [DataTestMethod] //new method
+        [DataRow(0, 14)]
+        [DataRow(1, 21)]
+        [DataRow(5, 21)]
+        [DataRow(6, 28)]
+        public void GetVacationDays_VariousYears_ReturnsExpectedDays(
+    int years, int expected)
+        {
+            // Arrange — входные данные подготовлены в DataRow.
+
+            // Act
+            int result = PayrollCalculator.GetVacationDays(years);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void GetVacationDays_NegativeYears_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            int years = -1;
+
+            // Act + Assert
+            Assert.ThrowsException<ArgumentOutOfRangeException>(
+                () => PayrollCalculator.GetVacationDays(years));
+        }
     }
 }
