@@ -88,28 +88,5 @@ namespace EmployeesApp.Services
                 2,
                 MidpointRounding.AwayFromZero);
         }
-        public static int GetVacationDays(int years)
-        {
-            if (years < 0)
-                throw new ArgumentOutOfRangeException(nameof(years));
-
-            // НАМЕРЕННЫЙ ДЕФЕКТ ДЛЯ PR-1:
-            // Здесь должно быть years >= 1, но пока стоит years > 1.
-            if (years > 1 && years <= 5)
-                return 21;
-
-            if (years > 5)
-                return 28;
-
-            return 14;
-        }
-
-        public static bool IsProbationPeriod(int months)
-        {
-            if (months < 0)
-                throw new ArgumentOutOfRangeException(nameof(months));
-
-            return months < 3;
-        }
     }
 }
